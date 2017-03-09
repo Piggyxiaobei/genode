@@ -1,7 +1,6 @@
 /*
  * \brief  Entry point for POSIX applications
  * \author Norman Feske
- * \author Emery Hemingway
  * \date   2016-12-23
  */
 
@@ -50,6 +49,9 @@ static void construct_component(Libc::Env &env)
 			if (node.has_type("env") && node.has_attribute("key") && node.has_attribute("value"))
 				++envc;
 		});
+
+		if (argc == 0 && envc == 0)
+			return; /* from lambda */
 
 		/* arguments and environment are a contiguous array (but don't count on it) */
 		argv = (char**)malloc((argc + envc + 1) * sizeof(char*));
